@@ -3,8 +3,11 @@ package com.kata.books.services;
 import java.util.Arrays;
 
 import com.kata.books.domain.Assunto;
+import com.kata.books.domain.Autor;
 import com.kata.books.domain.dtos.AssuntoDTO;
+import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.repositories.AssuntoRepository;
+import com.kata.books.repositories.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,12 @@ public class DBService {
 
 	@Autowired
 	private AssuntoService assuntoService;
+
+	@Autowired
+	private AutorRepository autorRepository;
+
+	@Autowired
+	private AutorService autorService;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -59,6 +68,11 @@ public class DBService {
 				new Assunto(null,"Drama")));
 
 		assuntoService.create(new AssuntoDTO(null, "Corrida"));
+
+		autorRepository.saveAll(Arrays.asList(new Autor(null, "José de Azevedo"), new Autor(null, "Morais João"),
+				new Autor(null,"Neuza Maria")));
+
+		autorService.create(new AutorDTO(null, "Silvestre Albuquerque"));
 	}
 
 }

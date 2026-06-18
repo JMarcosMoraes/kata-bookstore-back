@@ -1,14 +1,8 @@
 package com.kata.books.services;
 
 import com.kata.books.domain.Assunto;
-import com.kata.books.domain.Cliente;
-import com.kata.books.domain.Pessoa;
 import com.kata.books.domain.dtos.AssuntoDTO;
-import com.kata.books.domain.dtos.ClienteDTO;
 import com.kata.books.repositories.AssuntoRepository;
-import com.kata.books.repositories.ClienteRepository;
-import com.kata.books.repositories.PessoaRepository;
-import com.kata.books.services.exceptions.DataIntegrityViolationException;
 import com.kata.books.services.exceptions.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
