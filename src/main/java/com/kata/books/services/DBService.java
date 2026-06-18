@@ -2,6 +2,9 @@ package com.kata.books.services;
 
 import java.util.Arrays;
 
+import com.kata.books.domain.Assunto;
+import com.kata.books.domain.dtos.AssuntoDTO;
+import com.kata.books.repositories.AssuntoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,12 @@ public class DBService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
+
+	@Autowired
+	private AssuntoRepository assuntoRepository;
+
+	@Autowired
+	private AssuntoService assuntoService;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -28,12 +37,9 @@ public class DBService {
 
 		Cliente cli1 = new Cliente(null, "Linux", "03648469682", "teste@teste", encoder.encode("123"));
 
-
-
 		pessoaRepository.saveAll(Arrays.asList(tech1));
 		pessoaRepository.saveAll(Arrays.asList(cli1));
 
-		
 		Tecnico tec1 = new Tecnico(null, "Valdir Cezar", "550.482.150-95", "valdir@mail.com", encoder.encode("123"));
 		tec1.addPerfil(Perfil.ADMIN);
 		Tecnico tec2 = new Tecnico(null, "Richard Stallman", "903.347.070-56", "stallman@mail.com", encoder.encode("123"));
@@ -49,7 +55,10 @@ public class DBService {
 
 		pessoaRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5, cli6));
 
+		assuntoRepository.saveAll(Arrays.asList(new Assunto(null, "Ação"), new Assunto(null, "Suspense"),
+				new Assunto(null,"Drama")));
 
+		assuntoService.create(new AssuntoDTO(null, "Corrida"));
 	}
 
 }

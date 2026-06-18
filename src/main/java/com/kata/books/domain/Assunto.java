@@ -13,7 +13,8 @@ public class Assunto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String descricao;
-    // getters e setters
+
+    public Assunto(){}
 
     public Assunto getAssunto(AssuntoDTO assuntoDTO){
         return new Assunto(assuntoDTO.getId(),  assuntoDTO.getDescricao());

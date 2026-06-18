@@ -1,9 +1,17 @@
 package com.kata.books.domain.dtos;
 
+import com.kata.books.domain.Assunto;
+
 public class AssuntoDTO {
 
     private Integer id;
     private String descricao;
+
+
+    public AssuntoDTO(Assunto assunto){
+        this.id = assunto.getId();
+        this.descricao = assunto.getDescricao();
+    }
 
     public AssuntoDTO(Integer id, String descricao) {
         this.id = id;
