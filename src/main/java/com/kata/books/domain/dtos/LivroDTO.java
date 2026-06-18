@@ -1,42 +1,29 @@
-package com.kata.books.domain;
+package com.kata.books.domain.dtos;
 
-import com.kata.books.domain.dtos.LivroDTO;
-
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class Livro {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
+public class LivroDTO {
+
+    private Integer id;
     private String titulo;
     private String editora;
     private Integer edicao;
     private String anoPublicacao;
+    private AssuntoDTO assuntoDTO;
+    private List<AutorDTO> listAutor;
 
-    @ManyToOne
-    private Assunto assunto;
-
-    @ManyToMany
-    private List<Autor> listAutor;
-
-    public Livro() { }
-
-    public Livro(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, Assunto assunto, List<Autor> listAutor) {
+    public LivroDTO(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, AssuntoDTO assuntoDTO, List<AutorDTO> listAutor) {
         this.id = id;
         this.titulo = titulo;
         this.editora = editora;
         this.edicao = edicao;
         this.anoPublicacao = anoPublicacao;
-        this.assunto = assunto;
+        this.assuntoDTO = assuntoDTO;
         this.listAutor = listAutor;
     }
 
-    public Livro getLivro(LivroDTO livroDTO){
-        return new Livro();
-    }
+    public LivroDTO() {}
 
     public Integer getId() {
         return id;
@@ -78,19 +65,19 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public Assunto getAssunto() {
-        return assunto;
+    public AssuntoDTO getAssuntoDTO() {
+        return assuntoDTO;
     }
 
-    public void setAssunto(Assunto assunto) {
-        this.assunto = assunto;
+    public void setAssuntoDTO(AssuntoDTO assuntoDTO) {
+        this.assuntoDTO = assuntoDTO;
     }
 
-    public List<Autor> getListAutor() {
+    public List<AutorDTO> getListAutor() {
         return listAutor;
     }
 
-    public void setListAutor(List<Autor> listAutor) {
+    public void setListAutor(List<AutorDTO> listAutor) {
         this.listAutor = listAutor;
     }
 }

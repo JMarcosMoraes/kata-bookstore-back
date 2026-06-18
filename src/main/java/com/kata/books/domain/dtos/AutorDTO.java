@@ -1,6 +1,5 @@
 package com.kata.books.domain.dtos;
 
-import com.kata.books.domain.Assunto;
 import com.kata.books.domain.Autor;
 
 public class AutorDTO {
