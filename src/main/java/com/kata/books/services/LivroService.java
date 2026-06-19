@@ -28,6 +28,9 @@ public class LivroService {
 	@Autowired
 	private AssuntoRepository assuntoRepository;
 
+	@Autowired
+	private AutorRepository autorRepository;
+
 	public Livro findById(Integer id) {
 		Optional<Livro> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Livro não encontrado! Id: " + id));
@@ -46,6 +49,17 @@ public class LivroService {
 				new ObjectnotFoundException("Livro não encontrado! Id: " + id);
 			}
 
+			List<Autor> autores = new ArrayList<>();
+			if (objDto.getListAutor() != null && !objDto.getListAutor().isEmpty()) {
+				for (AutorDTO autorDTO : objDto.getListAutor()) {
+					Optional<Autor> autor = autorRepository.findById(autorDTO.getId());
+					if (autor.isEmpty()) {
+						throw new ObjectnotFoundException("Autor não encontrado! Id: " + autorDTO.getId());
+					}
+					autores.add(autor.get());
+				}
+			}
+
 			Livro livro = new Livro(
 					objDto.getId(),
 					objDto.getTitulo(),
@@ -53,7 +67,7 @@ public class LivroService {
 					objDto.getEdicao(),
 					objDto.getAnoPublicacao(),
 					assunto.get(),
-					null);
+					autores);
 			return repository.save(livro);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
