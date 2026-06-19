@@ -47,7 +47,7 @@ public class AutorService {
 	public void delete(Integer id) {
 		Autor obj = findById(id);
 
-		boolean existeLivro = livroRepository.existsByAutor_Id(id);
+		boolean existeLivro = livroRepository.existsByListAutor_Id(id);
 		if (existeLivro) {
 			throw new DataIntegrityViolationException("Não é possível excluir: existem livros vinculados a este Autor! Id: " + id);
 		}
