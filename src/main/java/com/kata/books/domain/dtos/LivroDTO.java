@@ -1,7 +1,9 @@
 package com.kata.books.domain.dtos;
 
+import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,7 +15,7 @@ public class LivroDTO {
     private Integer edicao;
     private String anoPublicacao;
     private AssuntoDTO assuntoDTO;
-    private List<AutorDTO> listAutor;
+    private List<AutorDTO> listAutor = new ArrayList<>();
 
     public LivroDTO(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, AssuntoDTO assuntoDTO, List<AutorDTO> listAutor) {
         this.id = id;
@@ -34,7 +36,10 @@ public class LivroDTO {
         this.edicao = livro.getEdicao();
         this.anoPublicacao = livro.getAnoPublicacao();
         this.assuntoDTO = new AssuntoDTO(livro.getAssunto());
-        this.listAutor = null;
+        for (Autor autor : livro.getListAutor()) {
+            this.listAutor.add(new AutorDTO(autor));
+        }
+
     }
 
     public Integer getId() {

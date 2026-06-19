@@ -1,6 +1,8 @@
 package com.kata.books.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.kata.books.domain.*;
 import com.kata.books.domain.dtos.AssuntoDTO;
@@ -79,8 +81,14 @@ public class DBService {
 
 		autorService.create(new AutorDTO(null, "Silvestre Albuquerque"));
 
-		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026",new Assunto(1,"Copa Do Mundo"),null)));
-		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021",new AssuntoDTO(1,"Ficção Cientifica"),null));
+		List<Autor> listAutor = new ArrayList<>();
+		listAutor.add(new Autor(1,"Neuza Maria"));
+
+		List<AutorDTO> listAutorDTO = new ArrayList<>();
+		listAutorDTO.add(new AutorDTO(1,"Neuza Maria"));
+
+		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026",new Assunto(1,"Copa Do Mundo"),listAutor)));
+		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021",new AssuntoDTO(1,"Ficção Cientifica"), listAutorDTO));
 	}
 
 }

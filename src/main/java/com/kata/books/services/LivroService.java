@@ -46,7 +46,7 @@ public class LivroService {
 			Optional<Assunto> assunto = assuntoRepository.findById(objDto.getAssuntoDTO().getId());
 
 			if (assunto.isEmpty()) {
-				new ObjectnotFoundException("Livro não encontrado! Id: " + id);
+				new ObjectnotFoundException("Assunto não encontrado! Id: " + id);
 			}
 
 			List<Autor> autores = new ArrayList<>();
