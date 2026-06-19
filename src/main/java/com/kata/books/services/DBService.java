@@ -49,7 +49,7 @@ public class DBService {
 
 	public void instanciaDB() {
 
-		Cliente cli1 = new Cliente(null, "Linux", "03648469682", "teste@teste", encoder.encode("123"));
+		Cliente cli1 = new Cliente(null, "Linux", "03648469682", "teste@teste.com", encoder.encode("123"));
 
 		pessoaRepository.saveAll(Arrays.asList(cli1));
 
