@@ -4,8 +4,12 @@ import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
 import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
+import com.kata.books.services.LivroPDFService;
 import com.kata.books.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,6 +25,9 @@ public class LivroResource {
 
 	@Autowired
 	private LivroService service;
+
+	@Autowired
+	private LivroPDFService pdfService;
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Livro> findById(@PathVariable Integer id) {
@@ -52,5 +59,21 @@ public class LivroResource {
 	public ResponseEntity<LivroDTO> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping(value = "/relatorio/pdf")
+	public ResponseEntity<byte[]> gerarRelatorioPDF(){
+		try {
+			byte[] pdf = pdfService.gerarRelatorioPDF();
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_PDF);
+			headers.setContentDispositionFormData("attachment", "relatorio_livros.pdf");
+			headers.setContentLength(pdf.length);
+
+			return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 }
