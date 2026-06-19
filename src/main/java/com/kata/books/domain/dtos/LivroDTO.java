@@ -14,8 +14,8 @@ public class LivroDTO {
     private String editora;
     private Integer edicao;
     private String anoPublicacao;
-    private AssuntoDTO assuntoDTO;
-    private List<AutorDTO> listAutor = new ArrayList<>();
+    private AssuntoDTO assunto;
+    private List<AutorDTO> autores = new ArrayList<>();
 
     public LivroDTO(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, AssuntoDTO assuntoDTO, List<AutorDTO> listAutor) {
         this.id = id;
@@ -23,8 +23,8 @@ public class LivroDTO {
         this.editora = editora;
         this.edicao = edicao;
         this.anoPublicacao = anoPublicacao;
-        this.assuntoDTO = assuntoDTO;
-        this.listAutor = listAutor;
+        this.assunto = assuntoDTO;
+        this.autores = listAutor;
     }
 
     public LivroDTO() {}
@@ -35,9 +35,9 @@ public class LivroDTO {
         this.editora = livro.getEditora();
         this.edicao = livro.getEdicao();
         this.anoPublicacao = livro.getAnoPublicacao();
-        this.assuntoDTO = new AssuntoDTO(livro.getAssunto());
+        this.assunto = new AssuntoDTO(livro.getAssunto());
         for (Autor autor : livro.getListAutor()) {
-            this.listAutor.add(new AutorDTO(autor));
+            this.autores.add(new AutorDTO(autor));
         }
 
     }
@@ -82,19 +82,19 @@ public class LivroDTO {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public AssuntoDTO getAssuntoDTO() {
-        return assuntoDTO;
+    public AssuntoDTO getAssunto() {
+        return assunto;
     }
 
-    public void setAssuntoDTO(AssuntoDTO assuntoDTO) {
-        this.assuntoDTO = assuntoDTO;
+    public void setAssunto(AssuntoDTO assunto) {
+        this.assunto = assunto;
     }
 
-    public List<AutorDTO> getListAutor() {
-        return listAutor;
+    public List<AutorDTO> getAutores() {
+        return this.autores;
     }
 
     public void setListAutor(List<AutorDTO> listAutor) {
-        this.listAutor = listAutor;
+        this.autores = listAutor;
     }
 }

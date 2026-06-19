@@ -1,5 +1,6 @@
 package com.kata.books.domain;
 
+import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 
 import javax.persistence.*;
@@ -30,8 +31,10 @@ public class Livro {
         this.editora = livroDTO.getEditora();
         this.edicao = livroDTO.getEdicao();
         this.anoPublicacao = livroDTO.getAnoPublicacao();
-        this.assunto = new Assunto().getAssunto(livroDTO.getAssuntoDTO());
-        this.listAutor = null;
+        this.assunto = new Assunto().getAssunto(livroDTO.getAssunto());
+        for (AutorDTO autorDto : livroDTO.getAutores()) {
+            this.listAutor.add(new Autor().getAutor(autorDto));
+        }
     }
 
     public Livro(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, Assunto assunto, List<Autor> listAutor) {

@@ -43,15 +43,15 @@ public class LivroService {
 	public Livro create(LivroDTO objDto) {
 
 		try {
-			Optional<Assunto> assunto = assuntoRepository.findById(objDto.getAssuntoDTO().getId());
+			Optional<Assunto> assunto = assuntoRepository.findById(objDto.getAssunto().getId());
 
 			if (assunto.isEmpty()) {
 				new ObjectnotFoundException("Assunto não encontrado! Id: " + id);
 			}
 
 			List<Autor> autores = new ArrayList<>();
-			if (objDto.getListAutor() != null && !objDto.getListAutor().isEmpty()) {
-				for (AutorDTO autorDTO : objDto.getListAutor()) {
+			if (objDto.getAutores() != null && !objDto.getAutores().isEmpty()) {
+				for (AutorDTO autorDTO : objDto.getAutores()) {
 					Optional<Autor> autor = autorRepository.findById(autorDTO.getId());
 					if (autor.isEmpty()) {
 						throw new ObjectnotFoundException("Autor não encontrado! Id: " + autorDTO.getId());
