@@ -1,23 +1,15 @@
 package com.kata.books.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kata.books.domain.enums.Perfil;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kata.books.domain.enums.Perfil;
 
 @Entity()
 public abstract class Pessoa implements Serializable {

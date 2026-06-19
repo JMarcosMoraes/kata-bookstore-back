@@ -1,16 +1,15 @@
 package com.kata.books.services;
 
-import java.util.Optional;
-
+import com.kata.books.domain.Pessoa;
+import com.kata.books.repositories.PessoaRepository;
+import com.kata.books.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.kata.books.domain.Pessoa;
-import com.kata.books.repositories.PessoaRepository;
-import com.kata.books.security.UserSS;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{

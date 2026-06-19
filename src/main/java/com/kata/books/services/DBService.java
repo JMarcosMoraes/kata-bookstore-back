@@ -1,22 +1,23 @@
 package com.kata.books.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import com.kata.books.domain.*;
+import com.kata.books.domain.Assunto;
+import com.kata.books.domain.Autor;
+import com.kata.books.domain.Cliente;
+import com.kata.books.domain.Livro;
 import com.kata.books.domain.dtos.AssuntoDTO;
 import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 import com.kata.books.repositories.AssuntoRepository;
 import com.kata.books.repositories.AutorRepository;
 import com.kata.books.repositories.LivroRepository;
+import com.kata.books.repositories.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.kata.books.domain.enums.Perfil;
-import com.kata.books.repositories.PessoaRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class DBService {

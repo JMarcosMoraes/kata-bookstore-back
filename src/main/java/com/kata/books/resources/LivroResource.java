@@ -1,8 +1,6 @@
 package com.kata.books.resources;
 
-import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
-import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 import com.kata.books.services.LivroPDFService;
 import com.kata.books.services.LivroService;

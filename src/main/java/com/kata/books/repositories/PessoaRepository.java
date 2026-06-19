@@ -1,10 +1,9 @@
 package com.kata.books.repositories;
 
-import java.util.Optional;
-
+import com.kata.books.domain.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.kata.books.domain.Pessoa;
+import java.util.Optional;
 
 public interface PessoaRepository extends JpaRepository<Pessoa, Integer>{
 	Optional<Pessoa> findByCpf(String cpf);

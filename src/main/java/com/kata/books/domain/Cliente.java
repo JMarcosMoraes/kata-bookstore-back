@@ -1,16 +1,10 @@
 package com.kata.books.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import com.kata.books.domain.dtos.ClienteDTO;
 import com.kata.books.domain.enums.Perfil;
+
+import javax.persistence.Entity;
+import java.util.stream.Collectors;
 
 @Entity
 public class Cliente extends Pessoa {
