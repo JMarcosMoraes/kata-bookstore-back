@@ -3,6 +3,8 @@ package com.kata.books.services;
 import com.kata.books.domain.Assunto;
 import com.kata.books.domain.dtos.AssuntoDTO;
 import com.kata.books.repositories.AssuntoRepository;
+import com.kata.books.repositories.LivroRepository;
+import com.kata.books.services.exceptions.DataIntegrityViolationException;
 import com.kata.books.services.exceptions.ObjectnotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class AssuntoService {
 
 	@Autowired
 	private AssuntoRepository repository;
+
+	@Autowired
+	private LivroRepository livroRepository;
 
 	public Assunto findById(Integer id) {
 		Optional<Assunto> obj = repository.findById(id);
@@ -41,6 +46,13 @@ public class AssuntoService {
 
 	public void delete(Integer id) {
 		Assunto obj = findById(id);
+
+	   boolean existeLivro = livroRepository.existsByAssunto_Id(id);
+		if (existeLivro) {
+			throw new DataIntegrityViolationException("Não é possível excluir: existem livros vinculados a este assunto! Id: " + id);
+		}
+
 		repository.delete(obj);
+
 	}
 }

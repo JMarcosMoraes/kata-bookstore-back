@@ -4,6 +4,7 @@ import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,8 @@ public class Livro {
     public Livro() { }
 
     public Livro(LivroDTO livroDTO){
+        this.listAutor = new ArrayList<>();
+
         this.id = livroDTO.getId();
         this.titulo = livroDTO.getTitulo();
         this.editora = livroDTO.getEditora();
@@ -48,7 +51,9 @@ public class Livro {
     }
 
     public Livro getLivro(LivroDTO livroDTO){
-        return new Livro();
+
+
+        return new Livro(livroDTO);
     }
 
     public Integer getId() {
