@@ -24,6 +24,16 @@ public class Livro {
 
     public Livro() { }
 
+    public Livro(LivroDTO livroDTO){
+        this.id = livroDTO.getId();
+        this.titulo = livroDTO.getTitulo();
+        this.editora = livroDTO.getEditora();
+        this.edicao = livroDTO.getEdicao();
+        this.anoPublicacao = livroDTO.getAnoPublicacao();
+        this.assunto = new Assunto().getAssunto(livroDTO.getAssuntoDTO());
+        this.listAutor = null;
+    }
+
     public Livro(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, Assunto assunto, List<Autor> listAutor) {
         this.id = id;
         this.titulo = titulo;

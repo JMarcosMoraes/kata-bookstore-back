@@ -48,7 +48,7 @@ public class LivroService {
 
 			Livro livro = new Livro(
 					objDto.getId(),
-					objDto.getEditora(),
+					objDto.getTitulo(),
 					objDto.getEditora(),
 					objDto.getEdicao(),
 					objDto.getAnoPublicacao(),

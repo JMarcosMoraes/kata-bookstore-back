@@ -1,8 +1,10 @@
 package com.kata.books.resources;
 
 import com.kata.books.domain.Autor;
+import com.kata.books.domain.Livro;
 import com.kata.books.domain.dtos.AutorDTO;
-import com.kata.books.services.AutorService;
+import com.kata.books.domain.dtos.LivroDTO;
+import com.kata.books.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,36 +20,36 @@ import java.util.stream.Collectors;
 public class LivroResource {
 
 	@Autowired
-	private AutorService service;
+	private LivroService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Autor> findById(@PathVariable Integer id) {
-		Autor obj = service.findById(id);
+	public ResponseEntity<Livro> findById(@PathVariable Integer id) {
+		Livro obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<AutorDTO>> findAll(){
-		List<Autor> list = service.findAll();
-		List<AutorDTO> listDto = list.stream().map(obj -> new AutorDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<LivroDTO>> findAll(){
+		List<Livro> list = service.findAll();
+		List<LivroDTO> listDto = list.stream().map(obj -> new LivroDTO(obj)).collect(Collectors.toList());
 		return (ResponseEntity.ok().body(listDto));
 	}
 	
 	@PostMapping
-	public ResponseEntity<AutorDTO> create(@Valid @RequestBody AutorDTO objDto ){
-		Autor newObj = service.create(objDto);
+	public ResponseEntity<LivroDTO> create(@Valid @RequestBody LivroDTO objDto ){
+		Livro newObj = service.create(objDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<AutorDTO> update(@PathVariable Integer id, @Valid @RequestBody AutorDTO objDto){
-		Autor obj = service.update(id, objDto);
-		return ResponseEntity.ok().body(new AutorDTO(obj));
+	public ResponseEntity<LivroDTO> update(@PathVariable Integer id, @Valid @RequestBody LivroDTO objDto){
+		Livro obj = service.update(id, objDto);
+		return ResponseEntity.ok().body(new LivroDTO(obj));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<AutorDTO> delete(@PathVariable Integer id){
+	public ResponseEntity<LivroDTO> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}

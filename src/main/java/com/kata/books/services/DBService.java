@@ -2,18 +2,17 @@ package com.kata.books.services;
 
 import java.util.Arrays;
 
-import com.kata.books.domain.Assunto;
-import com.kata.books.domain.Autor;
+import com.kata.books.domain.*;
 import com.kata.books.domain.dtos.AssuntoDTO;
 import com.kata.books.domain.dtos.AutorDTO;
+import com.kata.books.domain.dtos.LivroDTO;
 import com.kata.books.repositories.AssuntoRepository;
 import com.kata.books.repositories.AutorRepository;
+import com.kata.books.repositories.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.kata.books.domain.Cliente;
-import com.kata.books.domain.Tecnico;
 import com.kata.books.domain.enums.Perfil;
 import com.kata.books.repositories.PessoaRepository;
 
@@ -34,6 +33,12 @@ public class DBService {
 
 	@Autowired
 	private AutorService autorService;
+
+	@Autowired
+	private LivroRepository livroRepository;
+
+	@Autowired
+	private LivroService livroService;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -73,6 +78,9 @@ public class DBService {
 				new Autor(null,"Neuza Maria")));
 
 		autorService.create(new AutorDTO(null, "Silvestre Albuquerque"));
+
+		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026",new Assunto(1,"Copa Do Mundo"),null)));
+		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021",new AssuntoDTO(1,"Ficção Cientifica"),null));
 	}
 
 }

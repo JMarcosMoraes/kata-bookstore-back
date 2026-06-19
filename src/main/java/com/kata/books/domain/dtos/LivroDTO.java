@@ -1,5 +1,7 @@
 package com.kata.books.domain.dtos;
 
+import com.kata.books.domain.Livro;
+
 import java.util.List;
 
 
@@ -24,6 +26,16 @@ public class LivroDTO {
     }
 
     public LivroDTO() {}
+
+    public LivroDTO(Livro livro) {
+        this.id = livro.getId();
+        this.titulo = livro.getTitulo();
+        this.editora = livro.getEditora();
+        this.edicao = livro.getEdicao();
+        this.anoPublicacao = livro.getAnoPublicacao();
+        this.assuntoDTO = new AssuntoDTO(livro.getAssunto());
+        this.listAutor = null;
+    }
 
     public Integer getId() {
         return id;
