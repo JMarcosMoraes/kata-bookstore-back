@@ -110,11 +110,11 @@ public class LivroPDFService {
 					
 					// Autores
 					String autores = "-";
-					if (livro.getListAutor() != null && !livro.getListAutor().isEmpty()) {
+					if (livro.getAutores() != null && !livro.getAutores().isEmpty()) {
 						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i < livro.getListAutor().size(); i++) {
+						for (int i = 0; i < livro.getAutores().size(); i++) {
 							if (i > 0) sb.append(", ");
-							sb.append(livro.getListAutor().get(i).getNome());
+							sb.append(livro.getAutores().get(i).getNome());
 						}
 						autores = sb.toString();
 					}

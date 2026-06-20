@@ -22,12 +22,12 @@ public class Livro {
     private Assunto assunto;
 
     @ManyToMany
-    private List<Autor> listAutor;
+    private List<Autor> autores;
 
     public Livro() { }
 
     public Livro(LivroDTO livroDTO){
-        this.listAutor = new ArrayList<>();
+        this.autores = new ArrayList<>();
 
         this.id = livroDTO.getId();
         this.titulo = livroDTO.getTitulo();
@@ -36,7 +36,7 @@ public class Livro {
         this.anoPublicacao = livroDTO.getAnoPublicacao();
         this.assunto = new Assunto().getAssunto(livroDTO.getAssunto());
         for (AutorDTO autorDto : livroDTO.getAutores()) {
-            this.listAutor.add(new Autor().getAutor(autorDto));
+            this.autores.add(new Autor().getAutor(autorDto));
         }
     }
 
@@ -47,7 +47,7 @@ public class Livro {
         this.edicao = edicao;
         this.anoPublicacao = anoPublicacao;
         this.assunto = assunto;
-        this.listAutor = listAutor;
+        this.autores = listAutor;
     }
 
     public Livro getLivro(LivroDTO livroDTO){
@@ -104,11 +104,11 @@ public class Livro {
         this.assunto = assunto;
     }
 
-    public List<Autor> getListAutor() {
-        return listAutor;
+    public List<Autor> getAutores() {
+        return autores;
     }
 
-    public void setListAutor(List<Autor> listAutor) {
-        this.listAutor = listAutor;
+    public void setAutores(List<Autor> listAutor) {
+        this.autores = listAutor;
     }
 }

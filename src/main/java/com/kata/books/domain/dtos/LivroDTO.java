@@ -36,7 +36,7 @@ public class LivroDTO {
         this.edicao = livro.getEdicao();
         this.anoPublicacao = livro.getAnoPublicacao();
         this.assunto = new AssuntoDTO(livro.getAssunto());
-        for (Autor autor : livro.getListAutor()) {
+        for (Autor autor : livro.getAutores()) {
             this.autores.add(new AutorDTO(autor));
         }
 

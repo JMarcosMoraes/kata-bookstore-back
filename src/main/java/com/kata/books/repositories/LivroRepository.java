@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LivroRepository extends JpaRepository<Livro, Integer> {
     boolean existsByAssunto_Id(Integer assuntoId);
-    boolean existsByListAutor_Id(Integer autorId);
+    boolean existsByAutores_Id(Integer autorId);
 }
