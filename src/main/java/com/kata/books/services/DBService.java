@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,8 +78,8 @@ public class DBService {
 		List<AutorDTO> listAutorDTO = new ArrayList<>();
 		listAutorDTO.add(new AutorDTO(1,"Neuza Maria"));
 
-		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026",new Assunto(1,"Copa Do Mundo"),listAutor)));
-		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021",new AssuntoDTO(1,"Ficção Cientifica"), listAutorDTO));
+		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026", new BigDecimal(500.00), 5,new Assunto(1,"Copa Do Mundo"),listAutor)));
+		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021", new BigDecimal(1.000), 2, new AssuntoDTO(1,"Ficção Cientifica"), listAutorDTO));
 	}
 
 }

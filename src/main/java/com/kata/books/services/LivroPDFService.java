@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 public class LivroPDFService {
@@ -21,45 +25,44 @@ public class LivroPDFService {
 
 	public byte[] gerarRelatorioPDF() throws DocumentException {
 		List<Livro> livros = livroService.findAll();
-		
+
 		Document document = new Document(PageSize.A4.rotate());
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		
+
 		try {
 			PdfWriter.getInstance(document, outputStream);
 			document.open();
-			
-			// Adiciona título
+
+			// Título
 			Font fonteTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
 			Paragraph titulo = new Paragraph("RELATÓRIO DE LIVROS", fonteTitulo);
 			titulo.setAlignment(Element.ALIGN_CENTER);
 			document.add(titulo);
-			
-			// Adiciona data e hora
+
+			// Data e hora
 			Font fonteData = new Font(Font.FontFamily.HELVETICA, 10, Font.ITALIC);
 			LocalDateTime agora = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			Paragraph data = new Paragraph("Gerado em: " + agora.format(formatter), fonteData);
 			data.setAlignment(Element.ALIGN_RIGHT);
 			document.add(data);
-			
+
 			document.add(new Paragraph(" "));
-			
-			// Cria tabela com 7 colunas
-			PdfPTable table = new PdfPTable(7);
+
+			// Tabela com 9 colunas
+			PdfPTable table = new PdfPTable(9);
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(10f);
-			
-			// Define largura das colunas
-			float[] colunasLargura = {1f, 2.5f, 1.5f, 1f, 1f, 1.5f, 1.5f};
+
+			float[] colunasLargura = {0.8f, 2.5f, 1.5f, 1f, 1f, 1.3f, 1.3f, 2f, 2f};
 			table.setWidths(colunasLargura);
-			
-			// Adiciona cabeçalho da tabela
+
+			// Cabeçalho
 			Font fonteCabecalho = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.WHITE);
 			BaseColor corCabecalho = new BaseColor(51, 102, 153);
-			
-			String[] cabecalhos = {"ID", "Título", "Editora", "Edição", "Ano", "Assunto", "Autores"};
-			
+
+			String[] cabecalhos = {"ID", "Título", "Editora", "Edição", "Ano", "Valor", "Quant.", "Assunto", "Autores" };
+
 			for (String cabecalho : cabecalhos) {
 				PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
 				celula.setBackgroundColor(corCabecalho);
@@ -67,85 +70,102 @@ public class LivroPDFService {
 				celula.setPadding(10);
 				table.addCell(celula);
 			}
-			
-			// Adiciona dados dos livros
+
+			// Dados
 			Font fonteDados = new Font(Font.FontFamily.HELVETICA, 10);
-			
+
 			if (livros != null && !livros.isEmpty()) {
 				for (Livro livro : livros) {
-					// ID
-					PdfPCell celulaID = new PdfPCell(new Phrase(livro.getId().toString(), fonteDados));
-					celulaID.setPadding(8);
-					table.addCell(celulaID);
-					
-					// Título
-					PdfPCell celulaTitulo = new PdfPCell(new Phrase(livro.getTitulo() != null ? livro.getTitulo() : "-", fonteDados));
-					celulaTitulo.setPadding(8);
-					table.addCell(celulaTitulo);
-					
-					// Editora
-					PdfPCell celulaEditora = new PdfPCell(new Phrase(livro.getEditora() != null ? livro.getEditora() : "-", fonteDados));
-					celulaEditora.setPadding(8);
-					table.addCell(celulaEditora);
-					
-					// Edição
+					PdfPCell celulaId = new PdfPCell(new Phrase(livro.getId().toString(), fonteDados));
+					celulaId.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(celulaId);
+
+					table.addCell(new PdfPCell(new Phrase(livro.getTitulo() != null ? livro.getTitulo() : "-", fonteDados)));
+					table.addCell(new PdfPCell(new Phrase(livro.getEditora() != null ? livro.getEditora() : "-", fonteDados)));
+
 					PdfPCell celulaEdicao = new PdfPCell(new Phrase(livro.getEdicao() != null ? livro.getEdicao().toString() : "-", fonteDados));
-					celulaEdicao.setPadding(8);
 					celulaEdicao.setHorizontalAlignment(Element.ALIGN_CENTER);
 					table.addCell(celulaEdicao);
-					
-					// Ano Publicação
+
 					PdfPCell celulaAno = new PdfPCell(new Phrase(livro.getAnoPublicacao() != null ? livro.getAnoPublicacao() : "-", fonteDados));
-					celulaAno.setPadding(8);
 					celulaAno.setHorizontalAlignment(Element.ALIGN_CENTER);
 					table.addCell(celulaAno);
-					
-					// Assunto
-					String assuntoNome = (livro.getAssunto() != null && livro.getAssunto().getDescricao() != null) 
-						? livro.getAssunto().getDescricao() 
-						: "-";
-					PdfPCell celulaAssunto = new PdfPCell(new Phrase(assuntoNome, fonteDados));
-					celulaAssunto.setPadding(8);
-					table.addCell(celulaAssunto);
-					
-					// Autores
+
+					// Valor formatado
+					NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+					String valorFormatado = (livro.getValor() != null ? nf.format(livro.getValor()) : "-");
+					PdfPCell celulaValor = new PdfPCell(new Phrase(valorFormatado, fonteDados));
+					celulaValor.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					table.addCell(celulaValor);
+
+					// Quantidade
+					PdfPCell celulaQuantidade = new PdfPCell(new Phrase(
+							livro.getQuantidade() != null ? livro.getQuantidade().toString() : "-", fonteDados));
+					celulaQuantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(celulaQuantidade);
+
+					String assuntoNome = (livro.getAssunto() != null && livro.getAssunto().getDescricao() != null)
+							? livro.getAssunto().getDescricao() : "-";
+					table.addCell(new PdfPCell(new Phrase(assuntoNome, fonteDados)));
+
 					String autores = "-";
 					if (livro.getAutores() != null && !livro.getAutores().isEmpty()) {
-						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i < livro.getAutores().size(); i++) {
-							if (i > 0) sb.append(", ");
-							sb.append(livro.getAutores().get(i).getNome());
-						}
-						autores = sb.toString();
+						autores = livro.getAutores()
+								.stream()
+								.map(a -> a.getNome())
+								.collect(Collectors.joining(", "));
 					}
-					PdfPCell celulaAutores = new PdfPCell(new Phrase(autores, fonteDados));
-					celulaAutores.setPadding(8);
-					table.addCell(celulaAutores);
+					table.addCell(new PdfPCell(new Phrase(autores, fonteDados)));
+
+
 				}
 			} else {
-				// Adiciona linha vazia se não houver livros
 				PdfPCell celulaVazia = new PdfPCell(new Phrase("Nenhum livro cadastrado", fonteDados));
-				celulaVazia.setColspan(7);
+				celulaVazia.setColspan(9);
 				celulaVazia.setHorizontalAlignment(Element.ALIGN_CENTER);
 				celulaVazia.setPadding(10);
 				table.addCell(celulaVazia);
 			}
-			
+
 			document.add(table);
-			
-			// Adiciona resumo
+
+			// Resumo
 			document.add(new Paragraph(" "));
 			Font fonteResumo = new Font(Font.FontFamily.HELVETICA, 10);
-			Paragraph resumo = new Paragraph("Total de Livros: " + (livros != null ? livros.size() : 0), fonteResumo);
-			resumo.setAlignment(Element.ALIGN_RIGHT);
-			document.add(resumo);
-			
+
+			int totalQuantidade = 0;
+			BigDecimal valorTotal = BigDecimal.ZERO;
+			NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+			if (livros != null && !livros.isEmpty()) {
+				for (Livro livro : livros) {
+					if (livro.getQuantidade() != null) {
+						totalQuantidade += livro.getQuantidade();
+					}
+					if (livro.getValor() != null && livro.getQuantidade() != null) {
+						valorTotal = valorTotal.add(livro.getValor().multiply(new BigDecimal(livro.getQuantidade())));
+					}
+				}
+			}
+
+			Paragraph resumoLivros = new Paragraph("Total de Livros: " + (livros != null ? livros.size() : 0), fonteResumo);
+			resumoLivros.setAlignment(Element.ALIGN_RIGHT);
+			document.add(resumoLivros);
+
+			Paragraph resumoQuantidade = new Paragraph("Quantidade Total: " + totalQuantidade, fonteResumo);
+			resumoQuantidade.setAlignment(Element.ALIGN_RIGHT);
+			document.add(resumoQuantidade);
+
+			Paragraph resumoValor = new Paragraph("Valor Total: " + nf.format(valorTotal), fonteResumo);
+			resumoValor.setAlignment(Element.ALIGN_RIGHT);
+			document.add(resumoValor);
+
 		} finally {
 			if (document.isOpen()) {
 				document.close();
 			}
 		}
-		
+
 		return outputStream.toByteArray();
 	}
 }

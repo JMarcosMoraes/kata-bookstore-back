@@ -3,6 +3,7 @@ package com.kata.books.domain.dtos;
 import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,22 @@ public class LivroDTO {
     private String editora;
     private Integer edicao;
     private String anoPublicacao;
+    private BigDecimal valor;
+    private Integer quantidade;
+
     private AssuntoDTO assunto;
     private List<AutorDTO> autores = new ArrayList<>();
 
-    public LivroDTO(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, AssuntoDTO assuntoDTO, List<AutorDTO> listAutor) {
+    public LivroDTO(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao,
+                    BigDecimal valor, Integer quantidade,
+                    AssuntoDTO assuntoDTO, List<AutorDTO> listAutor) {
         this.id = id;
         this.titulo = titulo;
         this.editora = editora;
         this.edicao = edicao;
         this.anoPublicacao = anoPublicacao;
+        this.valor = valor;
+        this.quantidade = quantidade;
         this.assunto = assuntoDTO;
         this.autores = listAutor;
     }
@@ -35,6 +43,8 @@ public class LivroDTO {
         this.editora = livro.getEditora();
         this.edicao = livro.getEdicao();
         this.anoPublicacao = livro.getAnoPublicacao();
+        this.valor = livro.getValor();
+        this.quantidade = livro.getQuantidade();
         this.assunto = new AssuntoDTO(livro.getAssunto());
         for (Autor autor : livro.getAutores()) {
             this.autores.add(new AutorDTO(autor));
@@ -96,5 +106,21 @@ public class LivroDTO {
 
     public void setListAutor(List<AutorDTO> listAutor) {
         this.autores = listAutor;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

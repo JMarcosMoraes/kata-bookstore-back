@@ -4,6 +4,7 @@ import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class Livro {
     private String editora;
     private Integer edicao;
     private String anoPublicacao;
+    private BigDecimal valor;
+    private Integer quantidade;
 
     @ManyToOne
     private Assunto assunto;
@@ -34,18 +37,23 @@ public class Livro {
         this.editora = livroDTO.getEditora();
         this.edicao = livroDTO.getEdicao();
         this.anoPublicacao = livroDTO.getAnoPublicacao();
+        this.valor = livroDTO.getValor();
+        this.quantidade = livroDTO.getQuantidade();
         this.assunto = new Assunto().getAssunto(livroDTO.getAssunto());
         for (AutorDTO autorDto : livroDTO.getAutores()) {
             this.autores.add(new Autor().getAutor(autorDto));
         }
     }
 
-    public Livro(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao, Assunto assunto, List<Autor> listAutor) {
+    public Livro(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao,
+                 BigDecimal valor, Integer quantidade, Assunto assunto, List<Autor> listAutor) {
         this.id = id;
         this.titulo = titulo;
         this.editora = editora;
         this.edicao = edicao;
         this.anoPublicacao = anoPublicacao;
+        this.valor = valor;
+        this.quantidade = quantidade;
         this.assunto = assunto;
         this.autores = listAutor;
     }
@@ -110,5 +118,20 @@ public class Livro {
 
     public void setAutores(List<Autor> listAutor) {
         this.autores = listAutor;
+    }
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

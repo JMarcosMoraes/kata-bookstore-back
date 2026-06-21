@@ -66,6 +66,8 @@ public class LivroService {
 					objDto.getEditora(),
 					objDto.getEdicao(),
 					objDto.getAnoPublicacao(),
+					objDto.getValor(),
+					objDto.getQuantidade(),
 					assunto.get(),
 					autores);
 			return repository.save(livro);
