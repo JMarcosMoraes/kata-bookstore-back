@@ -32,12 +32,12 @@ public class LivroService {
 	private AutorRepository autorRepository;
 
 	public Livro findById(Integer id) {
-		Optional<Livro> obj = repository.findById(id);
+		Optional<Livro> obj = repository.findByIdWithAutores(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Livro não encontrado! Id: " + id));
 	}
 
 	public List<Livro> findAll() {
-		return repository.findAll();
+		return repository.findAllWithAutores();
 	}
 
 	public Livro create(LivroDTO objDto) {
