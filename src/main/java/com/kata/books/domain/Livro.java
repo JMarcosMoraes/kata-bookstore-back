@@ -14,10 +14,17 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 40)
     private String titulo;
+
+    @Column(length = 40)
     private String editora;
+
     private Integer edicao;
+
+    @Column(length = 40)
     private String anoPublicacao;
+
     private BigDecimal valor;
     private Integer quantidade;
 

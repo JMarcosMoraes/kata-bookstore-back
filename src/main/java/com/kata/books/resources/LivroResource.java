@@ -28,9 +28,10 @@ public class LivroResource {
 	private LivroPDFService pdfService;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Livro> findById(@PathVariable Integer id) {
+	public ResponseEntity<LivroDTO> findById(@PathVariable Integer id) {
 		Livro obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		LivroDTO returnDTO = new LivroDTO(obj);
+		return ResponseEntity.ok().body(returnDTO);
 	}
 	
 	@GetMapping

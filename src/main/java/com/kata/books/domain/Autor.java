@@ -2,16 +2,15 @@ package com.kata.books.domain;
 
 import com.kata.books.domain.dtos.AutorDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 40)
     private String nome;
 
     public Autor(){}

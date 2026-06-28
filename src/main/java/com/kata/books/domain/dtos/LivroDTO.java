@@ -3,6 +3,7 @@ package com.kata.books.domain.dtos;
 import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
 
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +12,38 @@ import java.util.List;
 public class LivroDTO {
 
     private Integer id;
+
+    @NotBlank(message = "O título é obrigatório e não pode estar vazia")
+    @Size(max = 40, message = "O título deve ter no máximo 40 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$",
+            message = "O título deve conter apenas letras, números e espaços")
     private String titulo;
+
+    @NotBlank(message = "A editore é obrigatório e não pode estar vazia")
+    @Size(max = 40, message = "A editora deve ter no máximo 40 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$",
+            message = "A editora deve conter apenas letras, números e espaços")
     private String editora;
+
+    @NotNull(message = "A edição é obrigatória e não pode ser nula")
+    @Min(value = 1, message = "A edição deve ser maior ou igual a 1")
+    @Max(value = 9999, message = "A edição deve ter no máximo 4 dígitos")
     private Integer edicao;
+
+    @NotBlank(message = "O ano de publicação é obrigatório e não pode estar vazio")
+    @Pattern(regexp = "^[0-9]{4}$",
+            message = "O ano de publicação deve conter exatamente 4 dígitos numéricos")
     private String anoPublicacao;
+
+
+    @NotNull(message = "O valor é obrigatório e não pode ser nulo")
+    @DecimalMin(value = "0.0", inclusive = false, message = "O valor deve ser maior que zero")
+    @Digits(integer = 10, fraction = 2, message = "O valor deve ter no máximo 10 dígitos inteiros e 2 decimais")
     private BigDecimal valor;
+
+    @NotNull(message = "A quantidade é obrigatória e não pode ser nula")
+    @Min(value = 0, message = "A quantidade deve ser maior ou igual a zero")
+    @Max(value = 9999, message = "A quantidade deve ter no máximo 4 dígitos")
     private Integer quantidade;
 
     private AssuntoDTO assunto;

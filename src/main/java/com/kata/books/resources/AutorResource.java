@@ -21,9 +21,10 @@ public class AutorResource {
 	private AutorService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Autor> findById(@PathVariable Integer id) {
+	public ResponseEntity<AutorDTO> findById(@PathVariable Integer id) {
 		Autor obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		AutorDTO returnDTO = new AutorDTO(obj);
+		return ResponseEntity.ok().body(returnDTO);
 	}
 	
 	@GetMapping

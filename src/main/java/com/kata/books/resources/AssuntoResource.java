@@ -21,9 +21,10 @@ public class AssuntoResource {
 	private AssuntoService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Assunto> findById(@PathVariable Integer id) {
+	public ResponseEntity<AssuntoDTO> findById(@PathVariable Integer id) {
 		Assunto obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		AssuntoDTO returnDTO = new AssuntoDTO(obj);
+		return ResponseEntity.ok().body(returnDTO);
 	}
 	
 	@GetMapping

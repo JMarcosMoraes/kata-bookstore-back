@@ -2,9 +2,18 @@ package com.kata.books.domain.dtos;
 
 import com.kata.books.domain.Assunto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class AssuntoDTO {
 
     private Integer id;
+
+    @NotBlank(message = "A descrição é obrigatória e não pode estar vazia")
+    @Size(max = 20, message = "A descrição deve ter no máximo 20 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]*$",
+            message = "A descrição deve conter apenas letras, números e espaços")
     private String descricao;
 
 
