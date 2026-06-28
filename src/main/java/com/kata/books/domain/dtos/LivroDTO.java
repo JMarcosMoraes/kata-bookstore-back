@@ -2,6 +2,7 @@ package com.kata.books.domain.dtos;
 
 import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
+import com.kata.books.domain.validator.AnoValido;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -15,13 +16,13 @@ public class LivroDTO {
 
     @NotBlank(message = "O título é obrigatório e não pode estar vazia")
     @Size(max = 40, message = "O título deve ter no máximo 40 caracteres")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]*$",
+    @Pattern(regexp = "^[\\p{L}0-9 ]*$",
             message = "O título deve conter apenas letras, números e espaços")
     private String titulo;
 
     @NotBlank(message = "A editore é obrigatório e não pode estar vazia")
     @Size(max = 40, message = "A editora deve ter no máximo 40 caracteres")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]*$",
+    @Pattern(regexp = "^[\\p{L}0-9 ]*$",
             message = "A editora deve conter apenas letras, números e espaços")
     private String editora;
 
@@ -33,6 +34,7 @@ public class LivroDTO {
     @NotBlank(message = "O ano de publicação é obrigatório e não pode estar vazio")
     @Pattern(regexp = "^[0-9]{4}$",
             message = "O ano de publicação deve conter exatamente 4 dígitos numéricos")
+    @AnoValido
     private String anoPublicacao;
 
 
