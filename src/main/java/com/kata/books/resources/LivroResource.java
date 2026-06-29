@@ -1,6 +1,7 @@
 package com.kata.books.resources;
 
 import com.kata.books.domain.Livro;
+import com.kata.books.domain.dtos.AutorLivrosDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 import com.kata.books.services.LivroPDFService;
 import com.kata.books.services.LivroService;
@@ -75,4 +76,11 @@ public class LivroResource {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+
+	@GetMapping(value = "/relatorio/autorLivros")
+	public ResponseEntity<List<AutorLivrosDTO>> gerarRelatorioAutorLivros(){
+			List<AutorLivrosDTO> pdf = service.findAutorbyLivros();
+			return (ResponseEntity.ok().body(pdf));
+	}
+
 }

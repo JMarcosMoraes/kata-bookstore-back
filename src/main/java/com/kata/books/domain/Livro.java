@@ -1,5 +1,6 @@
 package com.kata.books.domain;
 
+import com.kata.books.domain.dtos.AssuntoDTO;
 import com.kata.books.domain.dtos.AutorDTO;
 import com.kata.books.domain.dtos.LivroDTO;
 
@@ -28,8 +29,8 @@ public class Livro {
     private BigDecimal valor;
     private Integer quantidade;
 
-    @ManyToOne
-    private Assunto assunto;
+    @ManyToMany
+    private List<Assunto> assuntos;
 
     @ManyToMany
     private List<Autor> autores;
@@ -38,6 +39,7 @@ public class Livro {
 
     public Livro(LivroDTO livroDTO){
         this.autores = new ArrayList<>();
+        this.assuntos = new ArrayList<>();
 
         this.id = livroDTO.getId();
         this.titulo = livroDTO.getTitulo();
@@ -46,14 +48,17 @@ public class Livro {
         this.anoPublicacao = livroDTO.getAnoPublicacao();
         this.valor = livroDTO.getValor();
         this.quantidade = livroDTO.getQuantidade();
-        this.assunto = new Assunto().getAssunto(livroDTO.getAssunto());
+
+        for (AssuntoDTO assuntoDto : livroDTO.getAssuntos()) {
+            this.assuntos.add(new Assunto().getAssunto(assuntoDto));
+        }
         for (AutorDTO autorDto : livroDTO.getAutores()) {
             this.autores.add(new Autor().getAutor(autorDto));
         }
     }
 
     public Livro(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao,
-                 BigDecimal valor, Integer quantidade, Assunto assunto, List<Autor> listAutor) {
+                 BigDecimal valor, Integer quantidade, List<Assunto> assuntos, List<Autor> listAutor) {
         this.id = id;
         this.titulo = titulo;
         this.editora = editora;
@@ -61,13 +66,11 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
         this.valor = valor;
         this.quantidade = quantidade;
-        this.assunto = assunto;
+        this.assuntos = assuntos;
         this.autores = listAutor;
     }
 
     public Livro getLivro(LivroDTO livroDTO){
-
-
         return new Livro(livroDTO);
     }
 
@@ -111,12 +114,12 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public Assunto getAssunto() {
-        return assunto;
+    public List<Assunto> getAssuntos() {
+        return assuntos;
     }
 
-    public void setAssunto(Assunto assunto) {
-        this.assunto = assunto;
+    public void setAssunto(List<Assunto> assuntos) {
+        this.assuntos = assuntos;
     }
 
     public List<Autor> getAutores() {

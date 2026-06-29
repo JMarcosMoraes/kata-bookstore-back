@@ -92,7 +92,7 @@ class AssuntoServiceTest {
     @Test
     void testDeleteSuccess() {
         when(assuntoRepository.findById(1)).thenReturn(Optional.of(assunto));
-        when(livroRepository.existsByAssunto_Id(1)).thenReturn(false);
+        when(livroRepository.existsByAssuntos_Id(1)).thenReturn(false);
 
         assertDoesNotThrow(() -> assuntoService.delete(1));
         verify(assuntoRepository, times(1)).delete(assunto);
@@ -101,7 +101,7 @@ class AssuntoServiceTest {
     @Test
     void testDeleteWithLinkedBooks() {
         when(assuntoRepository.findById(1)).thenReturn(Optional.of(assunto));
-        when(livroRepository.existsByAssunto_Id(1)).thenReturn(true);
+        when(livroRepository.existsByAssuntos_Id(1)).thenReturn(true);
 
         assertThrows(DataIntegrityViolationException.class, () -> assuntoService.delete(1));
         verify(assuntoRepository, never()).delete(any());

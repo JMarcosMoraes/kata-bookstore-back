@@ -1,5 +1,6 @@
 package com.kata.books.domain.dtos;
 
+import com.kata.books.domain.Assunto;
 import com.kata.books.domain.Autor;
 import com.kata.books.domain.Livro;
 import com.kata.books.domain.validator.AnoValido;
@@ -48,12 +49,12 @@ public class LivroDTO {
     @Max(value = 9999, message = "A quantidade deve ter no máximo 4 dígitos")
     private Integer quantidade;
 
-    private AssuntoDTO assunto;
+    private List<AssuntoDTO> assuntos = new ArrayList<>();
     private List<AutorDTO> autores = new ArrayList<>();
 
     public LivroDTO(Integer id, String titulo, String editora, Integer edicao, String anoPublicacao,
                     BigDecimal valor, Integer quantidade,
-                    AssuntoDTO assuntoDTO, List<AutorDTO> listAutor) {
+                    List<AssuntoDTO> assuntos, List<AutorDTO> autores) {
         this.id = id;
         this.titulo = titulo;
         this.editora = editora;
@@ -61,8 +62,8 @@ public class LivroDTO {
         this.anoPublicacao = anoPublicacao;
         this.valor = valor;
         this.quantidade = quantidade;
-        this.assunto = assuntoDTO;
-        this.autores = listAutor;
+        this.assuntos = assuntos;
+        this.autores = autores;
     }
 
     public LivroDTO() {}
@@ -75,7 +76,11 @@ public class LivroDTO {
         this.anoPublicacao = livro.getAnoPublicacao();
         this.valor = livro.getValor();
         this.quantidade = livro.getQuantidade();
-        this.assunto = new AssuntoDTO(livro.getAssunto());
+
+        for (Assunto assunto : livro.getAssuntos()) {
+            this.assuntos.add(new AssuntoDTO(assunto));
+        }
+
         for (Autor autor : livro.getAutores()) {
             this.autores.add(new AutorDTO(autor));
         }
@@ -122,12 +127,12 @@ public class LivroDTO {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public AssuntoDTO getAssunto() {
-        return assunto;
+    public List<AssuntoDTO> getAssuntos() {
+        return assuntos;
     }
 
-    public void setAssunto(AssuntoDTO assunto) {
-        this.assunto = assunto;
+    public void setAssuntos(List<AssuntoDTO> assuntos) {
+        this.assuntos = assuntos;
     }
 
     public List<AutorDTO> getAutores() {

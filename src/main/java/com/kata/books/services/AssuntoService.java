@@ -47,7 +47,7 @@ public class AssuntoService {
 	public void delete(Integer id) {
 		Assunto obj = findById(id);
 
-	   boolean existeLivro = livroRepository.existsByAssunto_Id(id);
+	   boolean existeLivro = livroRepository.existsByAssuntos_Id(id);
 		if (existeLivro) {
 			throw new DataIntegrityViolationException("Não é possível excluir: existem livros vinculados a este assunto! Id: " + id);
 		}

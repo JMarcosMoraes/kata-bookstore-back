@@ -72,14 +72,23 @@ public class DBService {
 
 		autorService.create(new AutorDTO(null, "Silvestre Albuquerque"));
 
+		List<Assunto> listAssunto = new ArrayList<>();
+		listAssunto.add(new Assunto(1,"Copa do Mundo"));
+		listAssunto.add(new Assunto(2,"Formúla 1"));
+
+		List<AssuntoDTO> listAssuntoDTO = new ArrayList<>();
+		listAssuntoDTO.add(new AssuntoDTO(3,"Política"));
+		listAssuntoDTO.add(new AssuntoDTO(4,"Religião"));
+
+
 		List<Autor> listAutor = new ArrayList<>();
 		listAutor.add(new Autor(1,"Neuza Maria"));
 
 		List<AutorDTO> listAutorDTO = new ArrayList<>();
 		listAutorDTO.add(new AutorDTO(1,"Neuza Maria"));
 
-		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026", new BigDecimal(500.00), 5,new Assunto(1,"Copa Do Mundo"),listAutor)));
-		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021", new BigDecimal(1.000), 2, new AssuntoDTO(1,"Ficção Cientifica"), listAutorDTO));
+		livroRepository.saveAll(Arrays.asList(new Livro(null, "Os Vencedores","Master",1,"2026", new BigDecimal(500.00), 5, listAssunto, listAutor)));
+		livroService.create(new LivroDTO(null, "Lei da Atração","Steven",1,"2021", new BigDecimal(1.000), 2, listAssuntoDTO, listAutorDTO));
 	}
 
 }

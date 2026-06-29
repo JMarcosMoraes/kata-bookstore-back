@@ -61,7 +61,7 @@ public class LivroPDFService {
 			Font fonteCabecalho = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.WHITE);
 			BaseColor corCabecalho = new BaseColor(51, 102, 153);
 
-			String[] cabecalhos = {"ID", "Título", "Editora", "Edição", "Ano", "Valor", "Quant.", "Assunto", "Autores" };
+			String[] cabecalhos = {"ID", "Título", "Editora", "Edição", "Ano", "Valor", "Quant.", "Assuntos", "Autores" };
 
 			for (String cabecalho : cabecalhos) {
 				PdfPCell celula = new PdfPCell(new Phrase(cabecalho, fonteCabecalho));
@@ -104,9 +104,14 @@ public class LivroPDFService {
 					celulaQuantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
 					table.addCell(celulaQuantidade);
 
-					String assuntoNome = (livro.getAssunto() != null && livro.getAssunto().getDescricao() != null)
-							? livro.getAssunto().getDescricao() : "-";
-					table.addCell(new PdfPCell(new Phrase(assuntoNome, fonteDados)));
+					String assuntos = "-";
+					if (livro.getAssuntos() != null && !livro.getAssuntos().isEmpty()) {
+						assuntos = livro.getAssuntos()
+								.stream()
+								.map(a -> a.getDescricao())
+								.collect(Collectors.joining(", "));
+					}
+					table.addCell(new PdfPCell(new Phrase(assuntos, fonteDados)));
 
 					String autores = "-";
 					if (livro.getAutores() != null && !livro.getAutores().isEmpty()) {
