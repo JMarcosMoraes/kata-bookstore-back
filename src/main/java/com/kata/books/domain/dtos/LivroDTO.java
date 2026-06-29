@@ -17,13 +17,13 @@ public class LivroDTO {
 
     @NotBlank(message = "O título é obrigatório e não pode estar vazia")
     @Size(max = 40, message = "O título deve ter no máximo 40 caracteres")
-    @Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$",
+    @Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 .,]*$",
             message = "O título deve conter apenas letras, números e espaços")
     private String titulo;
 
     @NotBlank(message = "A editore é obrigatório e não pode estar vazia")
     @Size(max = 40, message = "A editora deve ter no máximo 40 caracteres")
-    @Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$",
+    @Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 .,]*$",
             message = "A editora deve conter apenas letras, números e espaços")
     private String editora;
 

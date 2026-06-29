@@ -12,7 +12,7 @@ public class AutorDTO {
 
     @NotBlank(message = "O nome é obrigatório e não pode estar vazia")
     @Size(max = 40, message = "O nome deve ter no máximo 40 caracteres")
-    @Pattern(regexp ="^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 ]*$",
+    @Pattern(regexp ="^[a-zA-ZÀ-ÖØ-öø-ÿ0-9 .,]*$",
             message = "O nome deve conter apenas letras, números e espaços")
     private String nome;
 
