@@ -13,7 +13,9 @@ public interface LivroRepository extends JpaRepository<Livro, Integer> {
     boolean existsByAssuntos_Id(Integer assuntoId);
     boolean existsByAutores_Id(Integer autorId);
 
-    @Query("SELECT DISTINCT l FROM Livro l JOIN FETCH l.autores")
+    List<Livro> findAllByOrderByTituloAsc();
+
+    @Query("SELECT DISTINCT l FROM Livro l JOIN FETCH l.autores ORDER BY l.titulo ASC")
     List<Livro> findAllWithAutores();
 
     @Query("SELECT l FROM Livro l JOIN FETCH l.autores WHERE l.id = :id")

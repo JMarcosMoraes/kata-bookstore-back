@@ -28,7 +28,7 @@ public class AutorService {
 	}
 
 	public List<Autor> findAll() {
-		return repository.findAll();
+		return repository.findAllByOrderByNomeAsc();
 	}
 
 	public Autor create(AutorDTO objDto) {

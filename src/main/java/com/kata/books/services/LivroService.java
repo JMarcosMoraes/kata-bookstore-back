@@ -44,10 +44,7 @@ public class LivroService {
 	}
 
 	public Livro create(LivroDTO objDto) {
-
 		try {
-
-
 			List<Assunto> assuntos = new ArrayList<>();
 			if (objDto.getAssuntos() != null && !objDto.getAssuntos().isEmpty()) {
 				for (AssuntoDTO asssuntoDTO : objDto.getAssuntos()) {

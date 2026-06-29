@@ -28,7 +28,7 @@ public class AssuntoService {
 	}
 
 	public List<Assunto> findAll() {
-		return repository.findAll();
+		return repository.findAllByOrderByDescricaoAsc();
 	}
 
 	public Assunto create(AssuntoDTO objDto) {
